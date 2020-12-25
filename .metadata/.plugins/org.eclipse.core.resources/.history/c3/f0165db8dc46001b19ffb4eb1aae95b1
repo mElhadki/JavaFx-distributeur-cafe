@@ -1,0 +1,175 @@
+package application;
+
+import com.coffeemachine.controllers.ClientController;
+import com.coffeemachine.controllers.MachineController;
+import com.coffeemachine.controllers.TechnicianController;
+import com.coffeemachine.models.Client;
+import com.coffeemachine.models.Machine;
+import com.coffeemachine.models.Technician;
+
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+
+public class SampleController implements Initializable {
+	@FXML 
+	private TextField idTech;
+	@FXML
+	private TextField nameTech;
+	@FXML
+	private TextField phoneTec;
+	@FXML
+	private TextField idRefTech;
+	@FXML
+	private TextField accessCodeTec;
+	@FXML 
+	private TabPane tabPane;
+	@FXML 
+	private Button btn1;
+ 	@FXML
+	private TableView<Technician> tablTec;
+	@FXML
+	private TableColumn<Technician, Long> colIdTec;
+	@FXML
+	private TableColumn<Technician, String> colNameTec;
+	@FXML
+	private TableColumn<Technician, String> colPhoneTec;
+	@FXML
+	private TableColumn<Technician, String> colIdRefTec;
+	@FXML
+	private TableColumn<Technician, String> colAccessCodeTec;
+	@FXML 
+	private Button btn2;
+	
+	//part Client 
+	
+	@FXML 
+	private TextField idC;
+	@FXML 
+	private TextField nameC;
+	@FXML 
+	private TextField phoneC;
+	@FXML 
+	private TextField choiceC;
+	@FXML 
+	private TextField coinsC;
+ 	@FXML
+	private TableView<Client> tablC;
+	@FXML
+	private TableColumn<Client, Long> colIdC;
+	@FXML
+	private TableColumn<Client, String> colNameC;
+	@FXML
+	private TableColumn<Client, String> colPhoneC;
+	
+	@FXML
+	private TableColumn<Client, String> colChoiceC;
+	@FXML
+	private TableColumn<Client, Double> colCoincC;
+	
+	//tab machine 
+	@FXML 
+	private TextField idMachine;
+	
+	@FXML 
+	private TableView<Machine> tableMachine;
+	@FXML 
+	private TableColumn<Machine, Long> idMachineTab;
+	TechnicianController technicianController;
+    ObservableList<Technician> technicians;
+	ClientController clientControl;
+    ObservableList<Client> clientList;
+
+    MachineController machineController;
+    ObservableList<Machine> machineList;
+	public  SampleController() {
+		technicianController = new TechnicianController();
+		technicians = FXCollections.observableArrayList();
+		clientControl = new ClientController();
+		clientList = FXCollections.observableArrayList();
+		machineController = new MachineController();
+		machineList = FXCollections.observableArrayList();
+	}
+		
+
+	public void addTech() throws Exception {
+		long id = Long.parseLong(idTech.getText());
+		String nameTString = this.nameTech.getText();
+		String phonString = this.phoneTec.getText();
+		String idRefString = this.idRefTech.getText();
+		String accessString = this.accessCodeTec.getText();
+		Technician technician = new Technician(id, nameTString, phonString, idRefString, accessString);
+		technicianController.AddTechnician(technicians, technician);
+		//System.out.println(technicians);
+		settingItemsTech();
+		this.idTech.clear();
+		this.nameTech.clear();
+		this.phoneTec.clear();
+		this.idRefTech.clear();
+		this.accessCodeTec.clear();
+	}
+	
+	public void initTech(URL url, ResourceBundle resourceBundle) {
+		colIdTec.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colNameTec.setCellValueFactory(new PropertyValueFactory<>("name"));
+		colPhoneTec.setCellValueFactory(new PropertyValueFactory<>("phone"));
+		colIdRefTec.setCellValueFactory(new PropertyValueFactory<>("idRef"));
+		colAccessCodeTec.setCellValueFactory(new PropertyValueFactory<>("accessCode"));
+	}
+	public void settingItemsTech() {
+		tablTec.setItems(technicians);
+		initTech(null, null);
+	}
+
+	
+	
+	public void addClient() throws Exception{
+		long id = Long.parseLong(idC.getText());
+		String nameTString = this.nameC.getText();
+		String phonString = this.phoneC.getText();
+		String choiceString = this.choiceC.getText();
+		double coinDouble = Double.parseDouble(this.coinsC.getText());
+		Client client = new Client(id, nameTString, phonString, choiceString, coinDouble);
+		clientControl.AddClient(clientList, client);
+		System.out.println(clientList);
+		settingItemsClient();
+	}
+	
+	public void initClient(URL url, ResourceBundle resourceBundle) {
+		colIdC.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colNameC.setCellValueFactory(new PropertyValueFactory<>("name"));
+		colPhoneC.setCellValueFactory(new PropertyValueFactory<>("phone"));
+		colChoiceC.setCellValueFactory(new PropertyValueFactory<>("choice"));
+		colCoincC.setCellValueFactory(new PropertyValueFactory<>("coins"));
+	}
+	public void settingItemsClient() {
+		tablC.setItems(clientList);
+		initClient(null, null);
+	}
+
+	public void addMachine() {
+		long id = Long.parseLong(idMachine.getText());
+		Machine machine = new Machine(id);
+		machineList.add(machine);
+	}
+	public void initMachine(URL url, ResourceBundle res) {
+		idMachine.setCellValueFactory();
+	}
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+		
+}

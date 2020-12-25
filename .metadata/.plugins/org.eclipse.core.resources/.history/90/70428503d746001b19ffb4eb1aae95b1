@@ -1,0 +1,35 @@
+package com.coffeemachine.models;
+
+public class Client extends Person{
+
+	private String choice;
+	private double coins;
+	
+	public Client(long id, String name, String phone, String choice, double coins) {
+		super(id, name, phone);
+		this.choice = choice;
+		this.coins = coins;
+	}
+
+	public String getChoice() {
+		return choice;
+	}
+
+	public void setChoice(String choice) {
+		this.choice = choice;
+	}
+
+	public double getCoins() {
+		return coins;
+	}
+
+	public void setCoins(double coins) {
+		this.coins = coins;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Client ["+super.toString()+" choice=" + choice + ", coins=" + coins + ""]";
+	}
+}

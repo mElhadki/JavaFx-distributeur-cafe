@@ -1,0 +1,67 @@
+package application;
+
+import com.coffeemachine.controllers.TechnicianController;
+import com.coffeemachine.models.Technician;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+
+
+public class SampleController{
+	@FXML 
+	private TextField idTech;
+	@FXML
+	private TextField nameTech;
+	@FXML
+	private TextField phoneTec;
+	@FXML
+	private TextField idRefTech;
+	@FXML
+	private TextField accessCodeTec;
+	@FXML 
+	private TabPane tabPane;
+	@FXML 
+	private Button btn1;
+	@FXML
+	private TableView<?> tablTec;
+	@FXML
+	private TableColumn<?,?> colIdTec;
+	@FXML
+	private TableColumn<?,?> colNameTec;
+	@FXML
+	private TableColumn<?,?> colPhoneTec;
+	@FXML
+	private TableColumn<?,?> colIdRefTec;
+	@FXML
+	private TableColumn<?,?> colAccessCodeTec;
+	
+		TechnicianController technicianController;
+		static List<Technician> technicians;
+		Technician techn;
+
+		public  SampleController() {
+			technicianController = new TechnicianController();
+			technicians = new ArrayList<Technician>();
+			
+		}
+		
+
+		public void addTech() throws Exception {
+			long id = Long.parseLong(idTech.getText());
+			String nameTString = this.nameTech.getText();
+			String phonString = this.phoneTec.getText();
+			String idRefString = this.idRefTech.getText();
+			String accessString = this.accessCodeTec.getText();
+			Technician technician = new Technician(id, nameTString, phonString, idRefString, accessString);
+			technicianController.AddTechnician(technicians, technician);
+			//System.out.println(technicians);
+		}
+		
+}

@@ -1,0 +1,19 @@
+INDEX VERSION 1.131+C:\Users\Admin\eclipse-workspace\FX-CofeeMachine\.metadata\.plugins\org.eclipse.jdt.core
+438369120.index
+2456866297.index
+3305500434.index
+4253202120.index
+1302437565.index
+729241205.index
+82621986.index
+3388670610.index
+2752759585.index
+448930253.index
+338553966.index
+1435359872.index
+1657330681.index
+3831310542.index
+3386613031.index
+2365076086.index
+2396925003.index
+999797504.index

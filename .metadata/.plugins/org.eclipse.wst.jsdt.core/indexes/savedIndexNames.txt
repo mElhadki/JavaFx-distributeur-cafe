@@ -1,0 +1,2 @@
+INDEX VERSION 1.4+C:\Users\Admin\eclipse-workspace\FX-CofeeMachine\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+4253202120.index
