@@ -1,29 +1,33 @@
 package application;
 
 import com.coffeemachine.controllers.ClientController;
+import com.coffeemachine.controllers.MachineController;
 import com.coffeemachine.controllers.ProductController;
 import com.coffeemachine.controllers.TechnicianController;
 import com.coffeemachine.models.Client;
+import com.coffeemachine.models.Machine;
+
 import com.coffeemachine.models.Product;
 import com.coffeemachine.models.Technician;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
+import javafx.scene.control.cell.PropertyValueFactory;
+import java.net.URL;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 
-public class SampleController{
-	
-	//Part Technicien 
-	
+
+public class SampleController implements Initializable {
 	@FXML 
 	private TextField idTech;
 	@FXML
@@ -38,103 +42,220 @@ public class SampleController{
 	private TabPane tabPane;
 	@FXML 
 	private Button btn1;
+ 	@FXML
+	private TableView<Technician> tablTec;
 	@FXML
-	private TableView<?> tablTec;
+	private TableColumn<Technician, Long> colIdTec;
 	@FXML
-	private TableColumn<?,?> colIdTec;
+	private TableColumn<Technician, String> colNameTec;
 	@FXML
-	private TableColumn<?,?> colNameTec;
+	private TableColumn<Technician, String> colPhoneTec;
 	@FXML
-	private TableColumn<?,?> colPhoneTec;
+	private TableColumn<Technician, String> colIdRefTec;
 	@FXML
-	private TableColumn<?,?> colIdRefTec;
-	@FXML
-	private TableColumn<?,?> colAccessCodeTec;
+	private TableColumn<Technician, String> colAccessCodeTec;
+	@FXML 
+	private Button btn2;
 	
+	//part Client 
 	
-	//Part Client 
-	
-	@FXML
+	@FXML 
 	private TextField idC;
-	@FXML
+	@FXML 
 	private TextField nameC;
-	@FXML
+	@FXML 
 	private TextField phoneC;
-	@FXML
+	@FXML 
 	private TextField choiceC;
-	@FXML
+	@FXML 
 	private TextField coinsC;
+ 	@FXML
+	private TableView<Client> tablC;
 	@FXML
-	private TextField restC;
+	private TableColumn<Client, Long> colIdC;
+	@FXML
+	private TableColumn<Client, String> colNameC;
+	@FXML
+	private TableColumn<Client, String> colPhoneC;
 	
-	//Part Product
+	@FXML
+	private TableColumn<Client, String> colChoiceC;
+	@FXML
+	private TableColumn<Client, Double> colCoincC;
+	
+	//tab machine 
+	@FXML 
+	private TextField idMachine;
+	
+	@FXML 
+	private TableView<Machine> tableMachine;
+	@FXML 
+	private TableColumn<Machine, Long> idMachineTab;
+	
+	@FXML 
+	private Button btnM;
+	
+	// tab product 
+	
 	@FXML
 	private TextField nameP;
 	@FXML
 	private TextField priceP;
+	@FXML
+	private TableView<Product> tablTec2;
+	@FXML
+	private TableColumn<Product, Long> colIdTec1;
+	@FXML
+	private TableColumn<Product, String> colNameTec1;
+	@FXML
+	private TableColumn<Product, Double> colPriceP;
+	@FXML
+	private Button btnProduct;
+	@FXML
+	private ChoiceBox<Machine> selectMachine;
 	
-	
-	
-		TechnicianController technicianController;
-		ClientController clientController;
-		ProductController productController;
-		static List<Technician> technicians;
-		static List<Client> clients;
-		static List<Product> products;
-		Technician techn;
-		Client client;
-		Product product;
-		
-		public  SampleController() {
-			technicianController = new TechnicianController();
-			clientController= new ClientController();
-			technicians = new ArrayList<Technician>();
-			clients = new ArrayList<Client>();
-			products = new ArrayList<Product>();
-		}
-		
-	
-	
-		 
-      //Add Technicient
-		public void addTech() throws Exception {
-			
-			long id = new Random().nextLong();
-			String nameTString = this.nameTech.getText();
-			String phonString = this.phoneTec.getText();
-			String idRedC = this.idRefTech.getText();
-			String accessString = this.accessCodeTec.getText();
-			Technician technician = new Technician(id, nameTString, phonString, idRedC, accessString);
-			technicianController.AddTechnician(technicians, technician);
-			System.out.println(technicians);
-		}
+	TechnicianController technicianController;
+    ObservableList<Technician> technicians;
+	ClientController clientControl;
+    ObservableList<Client> clientList;
+
+    MachineController machineController;
+    ObservableList<Machine> machineList;
+    
+    ProductController productController;
+    ObservableList<Product> productList;
+    
+	public  SampleController() {
+		technicianController = new TechnicianController();
+		technicians = FXCollections.observableArrayList();
+		clientControl = new ClientController();
+		clientList = FXCollections.observableArrayList();
+		machineController = new MachineController();
+		machineList = FXCollections.observableArrayList();
+		productController = new ProductController();
+		productList = FXCollections.observableArrayList();
+	}
 		
 
-		//add Client
+	public void addTech() throws Exception {
+		long id = Long.parseLong(idTech.getText());
+		String nameTString = this.nameTech.getText();
+		String phonString = this.phoneTec.getText();
+		String idRefString = this.idRefTech.getText();
+		String accessString = this.accessCodeTec.getText();
+		Technician technician = new Technician(id, nameTString, phonString, idRefString, accessString);
+		technicianController.AddTechnician(technicians, technician);
+		//System.out.println(technicians);
+		settingItemsTech();
+		this.idTech.clear();
+		this.nameTech.clear();
+		this.phoneTec.clear();
+		this.idRefTech.clear();
+		this.accessCodeTec.clear();
+	}
+	
+	public void initTech(URL url, ResourceBundle resourceBundle) {
+		colIdTec.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colNameTec.setCellValueFactory(new PropertyValueFactory<>("name"));
+		colPhoneTec.setCellValueFactory(new PropertyValueFactory<>("phone"));
+		colIdRefTec.setCellValueFactory(new PropertyValueFactory<>("idRef"));
+		colAccessCodeTec.setCellValueFactory(new PropertyValueFactory<>("accessCode"));
+	}
+	public void settingItemsTech() {
+		tablTec.setItems(technicians);
+		initTech(null, null);
+	}
+
+	
+	
+	public void addClient() throws Exception{
+		long id = Long.parseLong(idC.getText());
+		String nameTString = this.nameC.getText();
+		String phonString = this.phoneC.getText();
+		String choiceString = this.choiceC.getText();
+		double coinDouble = Double.parseDouble(this.coinsC.getText());
+		Client client = new Client(id, nameTString, phonString, choiceString, coinDouble);
+		clientControl.AddClient(clientList, client);
+		System.out.println(clientList);
+		settingItemsClient();
+	}
+	
+	public void initClient(URL url, ResourceBundle resourceBundle) {
+		colIdC.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colNameC.setCellValueFactory(new PropertyValueFactory<>("name"));
+		colPhoneC.setCellValueFactory(new PropertyValueFactory<>("phone"));
+		colChoiceC.setCellValueFactory(new PropertyValueFactory<>("choice"));
+		colCoincC.setCellValueFactory(new PropertyValueFactory<>("coins"));
+	}
+	public void settingItemsClient() {
+		tablC.setItems(clientList);
+		initClient(null, null);
+	}
+	
+	
+
+	public void addMachine() {
+		long id = Long.parseLong(idMachine.getText());
+		Machine machine = new Machine(id);
+		machineList.add(machine);
+		selectMachine.setItems(machineList);
+		selectMachine.getSelectionModel().selectFirst();
+		settingMachine();
+	}
+	
+	
+	public void demarrerM(){
 		
-		public void addClient() throws Exception {
-			long id = new Random().nextLong();
-			String nameClinet = this.nameC.getText();
-			String phoneClinet = this.phoneC.getText();
-			String choiceClient = this.choiceC.getText();
-			double coinsClient = Double.parseDouble(coinsC.getText());
-			double restClient = Double.parseDouble(restC.getText());
-			Client client = new Client(id, nameClinet, phoneClinet, choiceClient, coinsClient,restClient);
-			clientController.AddClient(clients, client);
-			System.out.println(clients);
-		}
 		
-		//add Product 
 		
-		public void addProduct() throws Exception {
-			long id = new Random().nextLong();
-			String nameProduct = this.nameP.getText();
-			double priceProduct =Double.parseDouble(priceP.getText());
+	}
+	
+	
+	public void initMachine(URL url, ResourceBundle res) {
+		idMachineTab.setCellValueFactory(new PropertyValueFactory<>("id"));
+	}
+	public void settingMachine() {
+		tableMachine.setItems(machineList);
+		initMachine(null, null);
+	}
+	
+	public void addProduct() {
+		   Random random = new Random();
+		   	int c = 9;
+			int generatedId = random.nextInt(c);
+			long id = generatedId;
+			String nameProduct = nameP.getText();
+			double priceProduct = Double.parseDouble(priceP.getText());
 			Product product = new Product(id, nameProduct, priceProduct);
-			productController.AddProduct(products, product);
-			System.out.println(products);
-		}
+			productList.add(product);
+			settingProduct();
+			nameP.clear();
+			priceP.clear();
+	}
+	
+	public void initProduct(URL url, ResourceBundle rsb) {
+		colIdTec1.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colNameTec1.setCellValueFactory(new PropertyValueFactory<>("name"));
+		colPriceP.setCellValueFactory(new PropertyValueFactory<>("price"));
 		
+	}
+	public void settingProduct() {
+		tablTec2.setItems(productList);
+		initProduct(null, null);
+	}
+	
+	 
+		   
+		   
+
+	
+
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+
 		
+	}
 		
 }
